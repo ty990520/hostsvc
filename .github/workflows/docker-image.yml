@@ -27,6 +27,7 @@ jobs:
 
   updateYaml:
     runs-on: ubuntu-latest
+    needs: buildImage
     steps:
       - name: 1. Checkout
         uses: actions/checkout@v3
