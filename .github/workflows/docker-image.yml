@@ -25,3 +25,19 @@ jobs:
         push: true
         tags: ty990520/hostservice:${{ github.sha }}
 
+  updateYaml:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1. Checkout
+        uses: actions/checkout@v3
+        with: 
+          repository: 'ty990520/hostsvc-cd'
+          token: ${{ secrets.HUB_TOKEN }}
+
+      - name: 2. Change Docker Tag
+        run: |
+          sed "s/image: ty990520\/node-app:.*/images: ty990520\/node-app:${{ github.sha }}/g"          
+          git config --global user.email "ty990520@naver.com"
+          git config --global user.name "ty990520"
+          git commit -am "triggered by github action"
+          git push origin main
